@@ -123,9 +123,7 @@ public class FABRIKEffector : MonoBehaviour {
     }
 
     public void UpdateTransform() {
-        Quaternion X90 = new Quaternion(Mathf.Sqrt(0.5F), 0.0F, 0.0F, Mathf.Sqrt(0.5F));
-
-        transform.rotation = Rotation * X90;
+        transform.rotation = Rotation;
         transform.position = Position;
 
         DebugDrawBounds();
