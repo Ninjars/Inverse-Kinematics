@@ -8,4 +8,11 @@ class Body : MonoBehaviour {
         limbs = GetComponentsInChildren<Limb>();
         Debug.Log($"Limb count: {limbs.Length}");
     }
+
+    private void Update() {
+        var targets = GameObject.FindGameObjectsWithTag("Target");
+        foreach (var limb in limbs) {
+            limb.updateTarget(targets);
+        }
+    }
 }

@@ -3,18 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Limb : MonoBehaviour {
-    public LimbSection limbSectionPrefab;
-    public LimbEnd limbEndPrefab;
-    public int sectionCount = 10;
-    public float speed = 100f;
-    public float initialTwist = 60;
-    public float endTwist = 10;
-    public float initialSwing = 60;
-    public float endSwing = 20;
+    public LimbData config;
 
     public Vector3 limbTarget;
 
     private FABRIKChain limbChain;
+    private GameObject targetObject;
 
     private void Awake() {
         limbChain = buildLimb(transform);
@@ -23,24 +17,26 @@ public class Limb : MonoBehaviour {
     // this can be expanded to build branching limbs and so return a list of chains.
     // the root chain should be tracked, and in the update function each chain will need backward() called on it
     private FABRIKChain buildLimb(Transform limbOrigin, FABRIKChain parentChain = null, int layer = 0) {
-        List<FABRIKEffector> sections = new List<FABRIKEffector>(sectionCount + (parentChain == null ? 2 : 3));
-        
+        List<FABRIKEffector> sections = new List<FABRIKEffector>(config.sectionCount + (parentChain == null ? 2 : 3));
+
         if (parentChain != null) sections.Add(parentChain.EndEffector);
 
-        buildLimbSection(sectionCount, limbOrigin, Vector3.zero, in sections);
+        buildLimbSection(config.sectionCount, limbOrigin, Vector3.zero, in sections);
 
         return new FABRIKChain(parentChain, sections, layer);
     }
 
     private void buildLimbSection(int remainingChildren, Transform parent, Vector3 offset, in List<FABRIKEffector> sections) {
-        LimbSection section = GameObject.Instantiate(limbSectionPrefab, parent);
+        LimbSection section = GameObject.Instantiate(config.limbSectionPrefab, parent);
         section.transform.Translate(offset, parent);
 
         var effector = section.GetComponent<FABRIKEffector>();
         sections.Add(effector);
 
-        effector.twistConstraint = Mathf.Lerp(initialTwist, endTwist, remainingChildren / (float)sectionCount);
-        effector.swingConstraint = Mathf.Lerp(initialSwing, endSwing, remainingChildren / (float)sectionCount);
+        effector.twistConstraint = Mathf.Lerp(config.endTwist, config.initialTwist, remainingChildren / (float)config.sectionCount);
+        effector.swingConstraint = Mathf.Lerp(config.endSwing, config.initialSwing, remainingChildren / (float)config.sectionCount);
+
+        Debug.Log($"{transform.name} section {remainingChildren} swing {effector.swingConstraint} twist {effector.twistConstraint}");
 
         if (remainingChildren > 0) {
             buildLimbSection(remainingChildren - 1, section.transform, section.childOffset, in sections);
@@ -50,7 +46,7 @@ public class Limb : MonoBehaviour {
     }
 
     private void buildLimbEnd(Transform parent, Vector3 offset, in List<FABRIKEffector> sections) {
-        LimbEnd section = GameObject.Instantiate(limbEndPrefab, parent);
+        LimbEnd section = GameObject.Instantiate(config.limbEndPrefab, parent);
         section.transform.Translate(offset, parent);
 
         var effector = section.GetComponent<FABRIKEffector>();
@@ -67,12 +63,41 @@ public class Limb : MonoBehaviour {
     }
 
     private void Update() {
-        limbChain.Target = Vector3.MoveTowards(limbChain.EndEffector.Position, limbTarget, Time.deltaTime * speed);
+        if (targetObject != null) {
+            limbTarget = targetObject.transform.position;
+        }
+        limbChain.Target = Vector3.MoveTowards(limbChain.EndEffector.Position, limbTarget, Time.deltaTime * config.speed);
 
         // propagate update up the chain from the end
         limbChain.Backward();
 
         // propagate results forward down the chain again
         limbChain.ForwardMulti();
+    }
+
+    private void OnDrawGizmos() {
+        if (limbChain != null) {
+            Debug.DrawLine(limbChain.EndEffector.transform.position, limbChain.Target, Color.red, 0);
+            Debug.DrawLine(limbChain.EndEffector.transform.position, limbTarget, Color.green, 0);
+        }
+    }
+
+    internal void updateTarget(GameObject[] targets) {
+        targetObject = closestTarget(targets);
+    }
+
+    private GameObject closestTarget(GameObject[] targets) {
+        GameObject closest = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = limbChain.EndEffector.transform.position;
+        foreach (GameObject target in targets) {
+            Vector3 diff = target.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance < distance) {
+                closest = target;
+                distance = curDistance;
+            }
+        }
+        return closest;
     }
 }

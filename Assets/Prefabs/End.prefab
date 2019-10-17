@@ -104,7 +104,6 @@ GameObject:
   - component: {fileID: 5554617819310770220}
   - component: {fileID: 5929089541902166314}
   - component: {fileID: 3477740051815307178}
-  - component: {fileID: 2998693063166395860}
   m_Layer: 0
   m_Name: Cube (4)
   m_TagString: Untagged
@@ -173,19 +172,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &2998693063166395860
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2769009325291585290}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4456287730528150300
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +183,6 @@ GameObject:
   - component: {fileID: 6652441496553094167}
   - component: {fileID: 78990199097111830}
   - component: {fileID: 2897601819782116693}
-  - component: {fileID: 321600119131458311}
   m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Untagged
@@ -266,19 +251,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &321600119131458311
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4456287730528150300}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6971870061132288867
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,7 +262,6 @@ GameObject:
   - component: {fileID: 6154690573888649130}
   - component: {fileID: 2832023847172551342}
   - component: {fileID: 3856892723843326146}
-  - component: {fileID: 2922258795292559257}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -359,19 +330,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &2922258795292559257
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6971870061132288867}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7202443565275583767
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,6 +341,7 @@ GameObject:
   - component: {fileID: 2755526336997461850}
   - component: {fileID: 7422932222550476893}
   - component: {fileID: 7376821502295630556}
+  - component: {fileID: 771540768835940274}
   m_Layer: 0
   m_Name: End
   m_TagString: Untagged
@@ -438,6 +397,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c91a2a2a635f4278b92a751b5efe125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!64 &771540768835940274
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7202443565275583767}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &7667233808558126789
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,7 +422,6 @@ GameObject:
   - component: {fileID: 4033347636123804225}
   - component: {fileID: 7133961092974868394}
   - component: {fileID: 7574784401716604175}
-  - component: {fileID: 3334574617231458231}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -518,16 +490,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &3334574617231458231
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7667233808558126789}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
