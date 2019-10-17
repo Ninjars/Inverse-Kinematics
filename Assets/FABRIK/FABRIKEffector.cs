@@ -85,7 +85,13 @@ public class FABRIKEffector : MonoBehaviour {
                 // Take our world-space direction and world-space up vector of the constraining rotation
                 // Multiply this by the inverse of the constraining rotation to derive a local rotation
                 Quaternion rotation_global = Quaternion.LookRotation(parent.Rotation * forwardAxisConstraint, parent.Rotation * upAxisConstraint);
-                Quaternion rotation_local = Quaternion.Inverse(rotation_global) * Quaternion.LookRotation(direction);
+                Quaternion rotation_local;
+                if (direction == Vector3.zero) {
+                    rotation_local = Quaternion.Inverse(rotation_global);
+
+                } else {
+                    rotation_local = Quaternion.Inverse(rotation_global) * Quaternion.LookRotation(direction);
+                }
 
                 Quaternion swing, twist;
 
