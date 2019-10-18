@@ -16,6 +16,7 @@ public class Body : MonoBehaviour {
     public float stepCyclePeriod = 5f;
 
     public AnimationCurve breathingCurve;
+    private float breathingCurveOffset;
 
     private Rigidbody rb;
     private List<Limb> arms;
@@ -28,6 +29,8 @@ public class Body : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         rb.position = new Vector3(rb.position.x, optimumHeightFromGround, rb.position.z);
         moveTarget = rb.position;
+
+        breathingCurveOffset = UnityEngine.Random.value;
 
         arms = new List<Limb>(armCount);
         if (armCount > 0) {
@@ -65,14 +68,14 @@ public class Body : MonoBehaviour {
 
     private void FixedUpdate() {
         float moveStep = moveSpeed * Time.fixedDeltaTime;
-        var verticalOffset = breathingCurve.Evaluate(Time.time);
+        var verticalOffset = breathingCurve.Evaluate(Time.time + breathingCurveOffset);
         rb.position = new Vector3(rb.position.x, optimumHeightFromGround + verticalOffset, rb.position.z);
         rb.MovePosition(Vector3.MoveTowards(rb.position, moveTarget, moveStep));
 
         // TODO: update one foot at a time with pause
         stepTimer += Time.fixedDeltaTime;
         if (stepTimer > stepPeriod) {
-            stepTimer -= stepPeriod;
+            stepTimer -= stepPeriod + UnityEngine.Random.value;
             activeLeg = (activeLeg + 1) % legs.Count;
             legs[activeLeg].takeStep((moveTarget - rb.position).normalized);
         }
