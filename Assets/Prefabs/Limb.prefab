@@ -43,14 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cacf86388d02e44ee9a22f9b945b9963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  limbSectionPrefab: {fileID: 7166407425640427928, guid: 61e08be9b3ecf4956966c003b4314f42,
-    type: 3}
-  limbEndPrefab: {fileID: 7376821502295630556, guid: 349bb2efa665742c4bf1637e7fdf909a,
-    type: 3}
-  sectionCount: 10
-  speed: 100
-  initialTwist: 60
-  endTwist: 10
-  initialSwing: 60
-  endSwing: 20
+  config: {fileID: 11400000, guid: 8bfd2100758234fa38a89b61ca4455c6, type: 2}
   limbTarget: {x: 0, y: 0, z: 0}

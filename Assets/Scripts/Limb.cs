@@ -36,7 +36,7 @@ public class Limb : MonoBehaviour {
         effector.twistConstraint = Mathf.Lerp(config.endTwist, config.initialTwist, remainingChildren / (float)config.sectionCount);
         effector.swingConstraint = Mathf.Lerp(config.endSwing, config.initialSwing, remainingChildren / (float)config.sectionCount);
 
-        Debug.Log($"{transform.name} section {remainingChildren} swing {effector.swingConstraint} twist {effector.twistConstraint}");
+        // Debug.Log($"{transform.name} section {remainingChildren} swing {effector.swingConstraint} twist {effector.twistConstraint}");
 
         if (remainingChildren > 0) {
             buildLimbSection(remainingChildren - 1, section.transform, section.childOffset, in sections);
