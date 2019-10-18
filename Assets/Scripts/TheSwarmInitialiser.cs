@@ -2,20 +2,31 @@
 
 public class TheSwarmInitialiser : MonoBehaviour {
 
-    public GameObject octopus;
+    public Body octopus;
     public GameObject target;
     public int octopusCount = 5;
-    public int targetCount = 200;
-    public float radius = 100f;
+
+    public int minArms = 1;
+    public int maxArms = 6;
+    public int minLegs = 3;
+    public int maxLegs = 8;
+
+    public int targetCount = 300;
+    public float targetRadius = 100f;
+    public float hunterRadius = 200f;
 
     void Start() {
         for (int i = 0; i < octopusCount; i++) {
-            var position = Random.insideUnitCircle * radius;
-            Instantiate(octopus, new Vector3(position.x, 12, position.y), Quaternion.identity);
+            var position = Random.insideUnitCircle * hunterRadius;
+            octopus.gameObject.SetActive(false);
+            var octo = Instantiate(octopus, new Vector3(position.x, 12, position.y), Quaternion.identity);
+            octo.armCount = Random.Range(minArms, maxArms);
+            octo.legCount = Random.Range(minLegs, maxLegs);
+            octo.gameObject.SetActive(true);
         }
         
         for (int i = 0; i < targetCount; i++) {
-            var position = Random.insideUnitCircle * radius;
+            var position = Random.insideUnitCircle * targetRadius;
             Instantiate(target, new Vector3(position.x, 1, position.y), Quaternion.identity);
         }
     }
