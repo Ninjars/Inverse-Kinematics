@@ -48,14 +48,17 @@ public class LegController : MonoBehaviour {
         RaycastHit legHit;
         bool didHit = Physics.Raycast(transform.position, baseRotation * Vector3.forward, out legHit, 100, layerMask);
         if (!didHit) {
+            Debug.Log("unable to find leg point");
             return transform.position - Vector3.up * 10;
         } else {
             RaycastHit downHit;
             bool downDidHit = Physics.Raycast(transform.position, Vector3.up * -1, out downHit, 1000, layerMask);
-            if (!downDidHit) return transform.position - Vector3.up * 10;
-
+            if (!downDidHit) {
+                Debug.Log("unable to find down point");
+                return transform.position - Vector3.up * 10;
+            }
             var position = Vector3.Lerp(legHit.point, downHit.point, 0.25f);
-            position += movementVector * stepReachFactor;
+            position += new Vector3(movementVector.x, 0, movementVector.z) * stepReachFactor;
             return position;
         }
     }

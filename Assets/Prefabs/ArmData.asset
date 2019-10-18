@@ -16,7 +16,7 @@ MonoBehaviour:
     type: 3}
   limbEndPrefab: {fileID: 7376821502295630556, guid: 349bb2efa665742c4bf1637e7fdf909a,
     type: 3}
-  sectionCount: 10
+  sectionCount: 13
   speed: 50
   initialTwist: 40
   endTwist: 20
