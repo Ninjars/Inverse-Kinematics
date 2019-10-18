@@ -2,6 +2,8 @@ using UnityEngine;
 
 [RequireComponent(typeof(Body))]
 public class Octopus : MonoBehaviour {
+    public bool directControl = false;
+
     private Body body;
 
     private void Awake() {
@@ -11,6 +13,9 @@ public class Octopus : MonoBehaviour {
     private void Update() {
         var targets = GameObject.FindGameObjectsWithTag("Target");
         body.updateArmTargets(targets);
+        
+        if (directControl) return;
+
         var closest = closestTarget(transform.position, targets);
         if (closest != null) {
             body.setMoveTarget(closest.transform.position);
