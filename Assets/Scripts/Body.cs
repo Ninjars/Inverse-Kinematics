@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Body : MonoBehaviour {
     public Limb armPrefab;
     public int armCount;
@@ -14,6 +15,7 @@ public class Body : MonoBehaviour {
     public float moveSpeed = 5;
     public float stepCyclePeriod = 5f;
 
+    private Rigidbody rb;
     private List<Limb> arms;
     private List<LegController> legs;
     private float stepPeriod;
@@ -21,8 +23,9 @@ public class Body : MonoBehaviour {
     private float stepTimer;
 
     private void Awake() {
-        transform.position = new Vector3(transform.position.x, optimumHeightFromGround, transform.position.z);
-        moveTarget = transform.position;
+        rb = GetComponent<Rigidbody>();
+        rb.position = new Vector3(rb.position.x, optimumHeightFromGround, rb.position.z);
+        moveTarget = rb.position;
 
         arms = new List<Limb>(armCount);
         if (armCount > 0) {
@@ -58,22 +61,22 @@ public class Body : MonoBehaviour {
         }
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         var targets = GameObject.FindGameObjectsWithTag("Target");
         // TODO: handle positioning arms when there's no targets
         foreach (var limb in arms) {
             updateTarget(limb, targets);
         }
 
-        float moveStep = moveSpeed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, moveTarget, moveStep);
+        float moveStep = moveSpeed * Time.fixedDeltaTime;
+        rb.MovePosition(Vector3.MoveTowards(rb.position, moveTarget, moveStep));
 
         // TODO: update one foot at a time with pause
-        stepTimer += Time.deltaTime;
+        stepTimer += Time.fixedDeltaTime;
         if (stepTimer > stepPeriod) {
             stepTimer -= stepPeriod;
             activeLeg = (activeLeg + 1) % legs.Count;
-            legs[activeLeg].takeStep((moveTarget - transform.position).normalized);
+            legs[activeLeg].takeStep((moveTarget - rb.position).normalized);
         }
     }
 

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(Rigidbody))]
 public class FABRIKEffector : MonoBehaviour {
     public float weight = 1.0F;
 
@@ -20,6 +21,7 @@ public class FABRIKEffector : MonoBehaviour {
 
     private Vector3 position;
     private Quaternion rotation;
+    private Rigidbody rb;
 
     public float Weight {
         get {
@@ -116,15 +118,16 @@ public class FABRIKEffector : MonoBehaviour {
     }
 
     void Awake() {
+        rb = GetComponent<Rigidbody>();
         parent = transform.parent != null ? transform.parent.gameObject.GetComponent<FABRIKEffector>() : null;
 
-        Position = transform.position;
-        Rotation = transform.rotation;
+        Position = rb.position;
+        Rotation = rb.rotation;
     }
 
     public void UpdateTransform() {
-        transform.rotation = Rotation;
-        transform.position = Position;
+        rb.MoveRotation(Rotation);
+        rb.MovePosition(Position);
 
         DebugDrawBounds();
     }

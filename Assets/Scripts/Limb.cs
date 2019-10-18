@@ -7,8 +7,9 @@ public class Limb : MonoBehaviour {
 
     public Vector3 limbTarget { private set; get; }
     private FABRIKChain limbChain;
+    private LimbEnd end;
 
-    private void Awake() {
+    private void Start() {
         limbChain = buildLimb(transform);
     }
 
@@ -43,13 +44,14 @@ public class Limb : MonoBehaviour {
     }
 
     internal Vector3 getEndPosition() {
-        return limbChain.EndEffector.transform.position;
+        return end.rb.position;
     }
 
     private void buildLimbEnd(Transform parent, Vector3 offset, in List<FABRIKEffector> sections) {
         LimbEnd section = GameObject.Instantiate(config.limbEndPrefab, parent);
         section.transform.Translate(offset, parent);
         section.transform.name = $"{transform.name} END";
+        end = section;
 
         var effector = section.GetComponent<FABRIKEffector>();
         sections.Add(effector);
@@ -58,8 +60,8 @@ public class Limb : MonoBehaviour {
         effector.swingConstraint = 80;
     }
 
-    private void Update() {
-        limbChain.Target = Vector3.MoveTowards(limbChain.EndEffector.Position, limbTarget, Time.deltaTime * config.speed);
+    private void FixedUpdate() {
+        limbChain.Target = Vector3.MoveTowards(limbChain.EndEffector.Position, limbTarget, Time.fixedDeltaTime * config.speed);
 
         // propagate update up the chain from the end
         limbChain.Backward();
@@ -74,8 +76,8 @@ public class Limb : MonoBehaviour {
 
     private void OnDrawGizmos() {
         if (limbChain != null) {
-            Debug.DrawLine(limbChain.EndEffector.transform.position, limbChain.Target, Color.red, 0);
-            Debug.DrawLine(limbChain.EndEffector.transform.position, limbTarget, Color.green, 0);
+            Debug.DrawLine(end.rb.position, limbChain.Target, Color.red, 0);
+            Debug.DrawLine(end.rb.position, limbTarget, Color.green, 0);
         }
     }
 }

@@ -24,7 +24,7 @@ public class LegController : MonoBehaviour {
         initialPosition = targetPosition;
     }
 
-    void Update() {
+    void FixedUpdate() {
         var elapsed = Time.time - startTime;
         var rawFraction = elapsed / movementDurationSeconds;
         if (elapsed > movementDurationSeconds) return;
