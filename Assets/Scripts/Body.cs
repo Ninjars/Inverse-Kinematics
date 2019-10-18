@@ -5,46 +5,56 @@ using UnityEngine;
 public class Body : MonoBehaviour {
     public Limb armPrefab;
     public int armCount;
-    public Limb legPrefab;
+    public LegController legPrefab;
     public int legCount;
     public float limbOffsetRadius = 2.5f;
-    
+
     public float optimumHeightFromGround = 12f;
     public Vector3 moveTarget;
     public float moveSpeed = 5;
+    public float stepCyclePeriod = 5f;
 
     private List<Limb> arms;
-    private List<Limb> legs;
+    private List<LegController> legs;
+    private float stepPeriod;
+    private int activeLeg;
+    private float stepTimer;
 
     private void Awake() {
         transform.position = new Vector3(transform.position.x, optimumHeightFromGround, transform.position.z);
         moveTarget = transform.position;
 
-        var rotationAnglePer = 360 / (armCount + 1);
-        
         arms = new List<Limb>(armCount);
-        for (int i = 0; i < armCount; i++) {
-            var elevationAngle = UnityEngine.Random.Range(-40, -10);
-            var rotation = Quaternion.Euler(elevationAngle, rotationAnglePer * i, 0);
-            var vector = rotation * Vector3.forward;
-            var limb = Instantiate(armPrefab, transform);
-            limb.transform.name = $"Arm {i}";
-            limb.transform.Translate(vector * limbOffsetRadius);
-            limb.transform.rotation = rotation;
-            arms.Add(limb);
+        if (armCount > 0) {
+            var rotationAnglePer = 360 / armCount;
+            for (int i = 0; i < armCount; i++) {
+                var elevationAngle = UnityEngine.Random.Range(-40, -10);
+                var rotation = Quaternion.Euler(elevationAngle, rotationAnglePer * i, 0);
+                var vector = rotation * Vector3.forward;
+                var limb = Instantiate(armPrefab, transform);
+                limb.transform.name = $"Arm {i}";
+                limb.transform.Translate(vector * limbOffsetRadius);
+                limb.transform.rotation = rotation;
+                arms.Add(limb);
+            }
         }
 
-        legs = new List<Limb>(legCount);
-        for (int i = 0; i < legCount; i++) {
-            var elevationAngle = UnityEngine.Random.Range(40, 10);
-            var rotation = Quaternion.Euler(elevationAngle, rotationAnglePer * i, 0);
-            var vector = rotation * Vector3.forward;
-            var limb = Instantiate(legPrefab, transform);
-            limb.transform.name = $"Leg {i}";
-            limb.transform.Translate(vector * limbOffsetRadius);
-            limb.transform.rotation = Quaternion.RotateTowards(rotation, Quaternion.Euler(-elevationAngle, rotationAnglePer * i, 0), 20);
-            limb.limbTarget = limb.getEndPosition();
-            legs.Add(limb);
+        legs = new List<LegController>(legCount);
+        stepPeriod = stepCyclePeriod / (float)legCount;
+        if (legCount > 0) {
+            var rotationAnglePer = 360 / legCount;
+            for (int i = 0; i < legCount; i++) {
+                var elevationAngle = UnityEngine.Random.Range(30, 30);
+                var rotation = Quaternion.Euler(elevationAngle, rotationAnglePer * i, 0);
+                var vector = rotation * Vector3.forward;
+                LegController legController = Instantiate(legPrefab, transform);
+                legController.transform.name = $"Leg {i}";
+                legController.transform.Translate(vector * limbOffsetRadius);
+                legController.transform.rotation = Quaternion.RotateTowards(rotation, Quaternion.Euler(-elevationAngle, rotationAnglePer * i, 0), 20);
+                legController.movementDurationSeconds = stepPeriod;
+                legController.baseRotation = rotation;
+                legs.Add(legController);
+            }
         }
     }
 
@@ -57,6 +67,14 @@ public class Body : MonoBehaviour {
 
         float moveStep = moveSpeed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, moveTarget, moveStep);
+
+        // TODO: update one foot at a time with pause
+        stepTimer += Time.deltaTime;
+        if (stepTimer > stepPeriod) {
+            stepTimer -= stepPeriod;
+            activeLeg = (activeLeg + 1) % legs.Count;
+            legs[activeLeg].takeStep((moveTarget - transform.position).normalized);
+        }
     }
 
     internal void setTargetPosition(Vector3 point) {
@@ -66,7 +84,7 @@ public class Body : MonoBehaviour {
     private void updateTarget(Limb limb, GameObject[] targets) {
         var targetObject = closestTarget(limb, targets);
         if (targetObject != null) {
-            limb.limbTarget = targetObject.transform.position;
+            limb.setTarget(targetObject.transform.position);
         }
     }
 

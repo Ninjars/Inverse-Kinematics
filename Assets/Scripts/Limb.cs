@@ -5,8 +5,7 @@ using UnityEngine;
 public class Limb : MonoBehaviour {
     public LimbData config;
 
-    public Vector3 limbTarget;
-
+    public Vector3 limbTarget { private set; get; }
     private FABRIKChain limbChain;
 
     private void Awake() {
@@ -73,6 +72,10 @@ public class Limb : MonoBehaviour {
 
         // propagate results forward down the chain again
         limbChain.ForwardMulti();
+    }
+
+    public void setTarget(Vector3 target) {
+        this.limbTarget = target;
     }
 
     private void OnDrawGizmos() {

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6fc883bfee515444990ccd4cf103bf80, type: 3}
-  m_Name: LimbData
+  m_Name: LegData
   m_EditorClassIdentifier: 
   limbSectionPrefab: {fileID: 7166407425640427928, guid: 61e08be9b3ecf4956966c003b4314f42,
     type: 3}
@@ -18,7 +18,7 @@ MonoBehaviour:
     type: 3}
   sectionCount: 10
   speed: 50
-  initialTwist: 20
-  endTwist: 10
+  initialTwist: 50
+  endTwist: 40
   initialSwing: 90
-  endSwing: 30
+  endSwing: 90

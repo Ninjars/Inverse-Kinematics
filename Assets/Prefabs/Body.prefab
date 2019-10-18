@@ -47,10 +47,14 @@ MonoBehaviour:
   armPrefab: {fileID: 5099248688644905334, guid: a9ab7f45ea26541efbda23e2fd4cb151,
     type: 3}
   armCount: 5
-  legPrefab: {fileID: 5099248688644905334, guid: a9ab7f45ea26541efbda23e2fd4cb151,
+  legPrefab: {fileID: -5193728134972544665, guid: 087f0175018c0439687765d217857cd4,
     type: 3}
   legCount: 6
   limbOffsetRadius: 2.5
+  optimumHeightFromGround: 12
+  moveTarget: {x: 0, y: 0, z: 0}
+  moveSpeed: 5
+  stepCyclePeriod: 5
 --- !u!1 &8537872018673195203
 GameObject:
   m_ObjectHideFlags: 0
