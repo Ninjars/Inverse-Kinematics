@@ -8,7 +8,6 @@ public class Limb : MonoBehaviour {
     public Vector3 limbTarget;
 
     private FABRIKChain limbChain;
-    private GameObject targetObject;
 
     private void Awake() {
         limbChain = buildLimb(transform);
@@ -45,6 +44,10 @@ public class Limb : MonoBehaviour {
         }
     }
 
+    internal Vector3 getEndPosition() {
+        return limbChain.EndEffector.transform.position;
+    }
+
     private void buildLimbEnd(Transform parent, Vector3 offset, in List<FABRIKEffector> sections) {
         LimbEnd section = GameObject.Instantiate(config.limbEndPrefab, parent);
         section.transform.Translate(offset, parent);
@@ -63,9 +66,6 @@ public class Limb : MonoBehaviour {
     }
 
     private void Update() {
-        if (targetObject != null) {
-            limbTarget = targetObject.transform.position;
-        }
         limbChain.Target = Vector3.MoveTowards(limbChain.EndEffector.Position, limbTarget, Time.deltaTime * config.speed);
 
         // propagate update up the chain from the end
@@ -80,24 +80,5 @@ public class Limb : MonoBehaviour {
             Debug.DrawLine(limbChain.EndEffector.transform.position, limbChain.Target, Color.red, 0);
             Debug.DrawLine(limbChain.EndEffector.transform.position, limbTarget, Color.green, 0);
         }
-    }
-
-    internal void updateTarget(GameObject[] targets) {
-        targetObject = closestTarget(targets);
-    }
-
-    private GameObject closestTarget(GameObject[] targets) {
-        GameObject closest = null;
-        float distance = Mathf.Infinity;
-        Vector3 position = limbChain.EndEffector.transform.position;
-        foreach (GameObject target in targets) {
-            Vector3 diff = target.transform.position - position;
-            float curDistance = diff.sqrMagnitude;
-            if (curDistance < distance) {
-                closest = target;
-                distance = curDistance;
-            }
-        }
-        return closest;
     }
 }

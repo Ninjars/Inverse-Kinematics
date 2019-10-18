@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8167c81f9cc84a35ab0cb545b3f8a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  limbPrefab: {fileID: 5099248688644905334, guid: a9ab7f45ea26541efbda23e2fd4cb151,
+  armPrefab: {fileID: 5099248688644905334, guid: a9ab7f45ea26541efbda23e2fd4cb151,
     type: 3}
-  limbCount: 5
-  limbOffsetRadius: 5
+  armCount: 5
+  limbOffsetRadius: 2.5
 --- !u!1 &8537872018673195203
 GameObject:
   m_ObjectHideFlags: 0
