@@ -15,7 +15,7 @@ public class Limb : MonoBehaviour {
     // this can be expanded to build branching limbs and so return a list of chains.
     // the root chain should be tracked, and in the update function each chain will need backward() called on it
     private FABRIKChain buildLimb(Transform limbOrigin, FABRIKChain parentChain = null, int layer = 0) {
-        List<FABRIKEffector> sections = new List<FABRIKEffector>(config.sectionCount + (parentChain == null ? 2 : 3));
+        List<FABRIKEffector> sections = new List<FABRIKEffector>(config.sectionCount + (parentChain == null ? 1 : 2));
 
         if (parentChain != null) sections.Add(parentChain.EndEffector);
 
@@ -27,14 +27,13 @@ public class Limb : MonoBehaviour {
     private void buildLimbSection(int remainingChildren, Transform parent, Vector3 offset, in List<FABRIKEffector> sections) {
         LimbSection section = GameObject.Instantiate(config.limbSectionPrefab, parent);
         section.transform.Translate(offset, parent);
+        section.transform.name = $"{transform.name} {remainingChildren}";
 
         var effector = section.GetComponent<FABRIKEffector>();
         sections.Add(effector);
 
         effector.twistConstraint = Mathf.Lerp(config.endTwist, config.initialTwist, remainingChildren / (float)config.sectionCount);
         effector.swingConstraint = Mathf.Lerp(config.endSwing, config.initialSwing, remainingChildren / (float)config.sectionCount);
-
-        // Debug.Log($"{transform.name} section {remainingChildren} swing {effector.swingConstraint} twist {effector.twistConstraint}");
 
         if (remainingChildren > 0) {
             buildLimbSection(remainingChildren - 1, section.transform, section.childOffset, in sections);
@@ -50,18 +49,13 @@ public class Limb : MonoBehaviour {
     private void buildLimbEnd(Transform parent, Vector3 offset, in List<FABRIKEffector> sections) {
         LimbEnd section = GameObject.Instantiate(config.limbEndPrefab, parent);
         section.transform.Translate(offset, parent);
+        section.transform.name = $"{transform.name} END";
 
         var effector = section.GetComponent<FABRIKEffector>();
         sections.Add(effector);
 
         effector.twistConstraint = 60;
         effector.swingConstraint = 80;
-
-        var endEffector = new GameObject();
-        endEffector.transform.position = section.transform.position;
-        endEffector.transform.parent = section.transform;
-        endEffector.AddComponent(typeof(FABRIKEffector));
-        sections.Add(endEffector.GetComponent<FABRIKEffector>());
     }
 
     private void Update() {

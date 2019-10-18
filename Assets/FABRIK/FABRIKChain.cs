@@ -80,6 +80,8 @@ public class FABRIKChain {
             effectors[i].Position = effectors[i - 1].Position + effectors[i - 1].Rotation * Vector3.forward * effectors[i - 1].Length;
         }
 
+        effectors[effectors.Count - 1].ApplyConstraints(Vector3.Normalize(Target - effectors[effectors.Count - 1].Position));
+
         // This is a sub-base, reset Target to zero to be recalculated in Backward
         if (children.Count != 0) {
             Target = Vector3.zero;
