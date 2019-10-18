@@ -150,11 +150,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c32d96e74e714093a641640c6243f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  octopus: {fileID: 3771677669283865177, guid: 24502050da41a47038bc6762733b58fe, type: 3}
+  octopus: {fileID: 8244783198276839887, guid: 24502050da41a47038bc6762733b58fe, type: 3}
   target: {fileID: 2161294211071072016, guid: ad25c97d5c369482aa3d0974630759f3, type: 3}
-  octopusCount: 5
-  targetCount: 200
-  radius: 100
+  octopusCount: 10
+  minArms: 1
+  maxArms: 6
+  minLegs: 3
+  maxLegs: 8
+  targetCount: 400
+  targetRadius: 100
+  hunterRadius: 200
 --- !u!4 &425902035
 Transform:
   m_ObjectHideFlags: 0
