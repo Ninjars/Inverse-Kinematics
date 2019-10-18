@@ -72,7 +72,6 @@ public class Body : MonoBehaviour {
         rb.position = new Vector3(rb.position.x, optimumHeightFromGround + verticalOffset, rb.position.z);
         rb.MovePosition(Vector3.MoveTowards(rb.position, moveTarget, moveStep));
 
-        // TODO: update one foot at a time with pause
         stepTimer += Time.fixedDeltaTime;
         if (stepTimer > stepPeriod) {
             stepTimer -= stepPeriod + UnityEngine.Random.value;
