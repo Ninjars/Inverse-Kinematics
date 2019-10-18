@@ -9,7 +9,7 @@ public class Limb : MonoBehaviour {
     private FABRIKChain limbChain;
     private LimbEnd end;
 
-    private void Start() {
+    private void Awake() {
         limbChain = buildLimb(transform);
     }
 

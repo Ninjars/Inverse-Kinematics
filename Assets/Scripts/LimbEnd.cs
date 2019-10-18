@@ -11,8 +11,14 @@ public class LimbEnd : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
     }
 
+    private void OnTriggerEnter(Collider other) {
+        if (other.transform.tag == "Target") {
+            other.gameObject.SetActive(false);
+        }
+    }
+
     private void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag == "Target") {
+        if (other.transform.tag == "Target") {
             other.gameObject.SetActive(false);
         }
     }

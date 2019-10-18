@@ -9,7 +9,7 @@ public class Commander : MonoBehaviour {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 10000f, inputLayerMask)) {
-                unit.setTargetPosition(hit.point);
+                unit.setMoveTarget(hit.point);
             }
         }
     }

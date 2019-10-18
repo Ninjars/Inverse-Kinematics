@@ -62,12 +62,6 @@ public class Body : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        var targets = GameObject.FindGameObjectsWithTag("Target");
-        // TODO: handle positioning arms when there's no targets
-        foreach (var limb in arms) {
-            updateTarget(limb, targets);
-        }
-
         float moveStep = moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(Vector3.MoveTowards(rb.position, moveTarget, moveStep));
 
@@ -80,21 +74,27 @@ public class Body : MonoBehaviour {
         }
     }
 
-    internal void setTargetPosition(Vector3 point) {
+    internal void updateArmTargets(GameObject[] targets) {
+        // TODO: handle positioning arms when there's no targets
+        foreach (var limb in arms) {
+            updateTarget(limb, targets);
+        }
+    }
+
+    internal void setMoveTarget(Vector3 point) {
         moveTarget = new Vector3(point.x, optimumHeightFromGround, point.z);
     }
 
     private void updateTarget(Limb limb, GameObject[] targets) {
-        var targetObject = closestTarget(limb, targets);
+        var targetObject = closestTarget(limb.getEndPosition(), targets);
         if (targetObject != null) {
             limb.setTarget(targetObject.transform.position);
         }
     }
 
-    private GameObject closestTarget(Limb limb, GameObject[] targets) {
+    private GameObject closestTarget(Vector3 position, GameObject[] targets) {
         GameObject closest = null;
         float distance = Mathf.Infinity;
-        Vector3 position = limb.getEndPosition();
         foreach (GameObject target in targets) {
             Vector3 diff = target.transform.position - position;
             float curDistance = diff.sqrMagnitude;
