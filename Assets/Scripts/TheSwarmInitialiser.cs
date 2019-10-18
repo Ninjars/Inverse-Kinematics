@@ -16,14 +16,15 @@ public class TheSwarmInitialiser : MonoBehaviour {
     public float hunterRadius = 200f;
 
     void Start() {
+        octopus.gameObject.SetActive(false);
         for (int i = 0; i < octopusCount; i++) {
             var position = Random.insideUnitCircle * hunterRadius;
-            octopus.gameObject.SetActive(false);
             var octo = Instantiate(octopus, new Vector3(position.x, 12, position.y), Quaternion.identity);
             octo.armCount = Random.Range(minArms, maxArms);
             octo.legCount = Random.Range(minLegs, maxLegs);
             octo.gameObject.SetActive(true);
         }
+        octopus.gameObject.SetActive(true);
         
         for (int i = 0; i < targetCount; i++) {
             var position = Random.insideUnitCircle * targetRadius;
