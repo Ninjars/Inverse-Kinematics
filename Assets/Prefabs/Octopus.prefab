@@ -57,6 +57,48 @@ MonoBehaviour:
   moveTarget: {x: 0, y: 0, z: 0}
   moveSpeed: 5
   stepCyclePeriod: 2
+  breathingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.9862702
+      outSlope: 1.9862702
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.20641854
+    - serializedVersion: 3
+      time: 0.5890626
+      value: 0.98554015
+      inSlope: 0.004540779
+      outSlope: 0.004540779
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.18367416
+    - serializedVersion: 3
+      time: 1.5016034
+      value: -0.9998888
+      inSlope: -0.0041762926
+      outSlope: -0.0041762926
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.07216301
+    - serializedVersion: 3
+      time: 2
+      value: 0.000030517578
+      inSlope: 2.2278655
+      outSlope: 2.2278655
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.21033143
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 1
+    m_RotationOrder: 4
 --- !u!54 &8278789501532801479
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -15,6 +15,8 @@ public class Body : MonoBehaviour {
     public float moveSpeed = 5;
     public float stepCyclePeriod = 5f;
 
+    public AnimationCurve breathingCurve;
+
     private Rigidbody rb;
     private List<Limb> arms;
     private List<LegController> legs;
@@ -63,6 +65,8 @@ public class Body : MonoBehaviour {
 
     private void FixedUpdate() {
         float moveStep = moveSpeed * Time.fixedDeltaTime;
+        var verticalOffset = breathingCurve.Evaluate(Time.time);
+        rb.position = new Vector3(rb.position.x, optimumHeightFromGround + verticalOffset, rb.position.z);
         rb.MovePosition(Vector3.MoveTowards(rb.position, moveTarget, moveStep));
 
         // TODO: update one foot at a time with pause
