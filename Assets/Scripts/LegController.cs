@@ -29,8 +29,7 @@ public class LegController : MonoBehaviour {
         var rawFraction = elapsed / movementDurationSeconds;
         if (elapsed > movementDurationSeconds) {
             if (isTargetOutOfRange(limb.getEndPosition())) {
-                // Stretching beyond limb length; reset even though it's not this limb's time to be moving
-                limb.setTarget(findTargetPosition(Vector3.zero));
+                takeStep(Vector3.zero);
             }
             return;
         }
@@ -74,7 +73,7 @@ public class LegController : MonoBehaviour {
             return transform.position - Vector3.up * 10;
         }
 
-        var position = Vector3.Lerp(legHit.point, downHit.point, 0.25f);
+        var position = Vector3.Lerp(legHit.point, downHit.point, 0.5f);
         position += new Vector3(movementVector.x, 0, movementVector.z) * stepReachFactor;
         return position;
     }

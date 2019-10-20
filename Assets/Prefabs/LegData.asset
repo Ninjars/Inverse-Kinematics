@@ -18,7 +18,7 @@ MonoBehaviour:
     type: 3}
   sectionCount: 5
   speed: 50
-  initialTwist: 0
-  endTwist: 0
+  initialTwist: 180
+  endTwist: 180
   initialSwing: 130
   endSwing: 130

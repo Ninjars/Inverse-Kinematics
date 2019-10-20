@@ -62,8 +62,8 @@ public class Limb : MonoBehaviour {
         var effector = section.GetComponent<FABRIKEffector>();
         sections.Add(effector);
 
-        effector.twistConstraint = 60;
-        effector.swingConstraint = 80;
+        effector.twistConstraint = 0;
+        effector.swingConstraint = 0;
     }
 
     private void FixedUpdate() {
