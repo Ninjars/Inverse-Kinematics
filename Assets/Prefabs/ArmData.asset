@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   limbSectionPrefab: {fileID: 7166407425640427928, guid: 61e08be9b3ecf4956966c003b4314f42,
     type: 3}
-  limbEndPrefab: {fileID: 7376821502295630556, guid: 349bb2efa665742c4bf1637e7fdf909a,
+  limbEndPrefab: {fileID: 7376821502295630556, guid: 303727507502f16418897a01a908f437,
     type: 3}
   sectionCount: 13
-  speed: 50
-  initialTwist: 40
-  endTwist: 20
-  initialSwing: 90
-  endSwing: 45
+  speed: 20
+  initialTwist: 80
+  endTwist: 60
+  initialSwing: 140
+  endSwing: 60

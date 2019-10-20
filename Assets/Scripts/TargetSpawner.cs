@@ -7,9 +7,11 @@ class TargetSpawner : MonoBehaviour {
 
     private ObjectPool targetPool;
     private float spawnTimer;
+    private bool isRbKinematic;
 
     private void Awake() {
         targetPool = new ObjectPool(targetPrefab, 20);
+        isRbKinematic = targetPrefab.GetComponent<Rigidbody>().isKinematic;
     }
 
     private void Update() {
@@ -29,6 +31,7 @@ class TargetSpawner : MonoBehaviour {
         var rb = target.GetComponent<Rigidbody>();
         rb.angularVelocity = new Vector3(Random.value, Random.value, Random.value);
         rb.velocity = new Vector3(0, -0.5f, 1);
+        rb.isKinematic = isRbKinematic;
 
         target.SetActive(true);
         return target;

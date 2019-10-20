@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 771540768835940274}
   - component: {fileID: 3324700262348966794}
   m_Layer: 0
-  m_Name: End
+  m_Name: End Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -398,7 +398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c91a2a2a635f4278b92a751b5efe125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactWithTargets: 0
+  interactWithTargets: 1
   rb: {fileID: 0}
 --- !u!64 &771540768835940274
 MeshCollider:

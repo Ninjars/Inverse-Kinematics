@@ -49,6 +49,10 @@ public class Limb : MonoBehaviour {
         return end.rb.position;
     }
 
+    internal Quaternion getEndRotation() {
+        return end.rb.rotation;
+    }
+
     private void buildLimbEnd(Transform parent, Vector3 offset, in List<FABRIKEffector> sections) {
         LimbEnd section = GameObject.Instantiate(config.limbEndPrefab, parent);
         section.transform.Translate(offset, parent);

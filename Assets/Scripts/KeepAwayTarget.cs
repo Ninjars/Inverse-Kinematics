@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class KeepAwayTarget : MonoBehaviour {
     public float moveSpeed;
+    [HideInInspector]
+    public bool canMove = true;
     private Rigidbody rb;
     private GameObject[] hunters;
 
@@ -16,7 +18,14 @@ public class KeepAwayTarget : MonoBehaviour {
         hunters = GameObject.FindGameObjectsWithTag("Octopus");
     }
 
+    void OnEnable() {
+        canMove = true;
+        rb.isKinematic = true;
+    }
+
     private void FixedUpdate() {
+        if (!canMove) return;
+
         var closest = closestHostile(hunters);
 
         var escapeVector = rb.position - closest.transform.position;

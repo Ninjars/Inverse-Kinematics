@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Maw))]
 public class Body : MonoBehaviour {
     public ArmController armPrefab;
     public int armCount;
@@ -18,6 +19,7 @@ public class Body : MonoBehaviour {
     public AnimationCurve breathingCurve;
     private float breathingCurveOffset;
 
+    private Maw maw;
     private Rigidbody rb;
     private List<ArmController> arms;
     private List<LegController> legs;
@@ -26,6 +28,7 @@ public class Body : MonoBehaviour {
     private float stepTimer;
 
     private void Awake() {
+        maw = GetComponent<Maw>();
         rb = GetComponent<Rigidbody>();
         rb.position = new Vector3(rb.position.x, optimumHeightFromGround, rb.position.z);
         moveTarget = rb.position;
@@ -39,11 +42,12 @@ public class Body : MonoBehaviour {
                 var elevationAngle = UnityEngine.Random.Range(-40, -10);
                 var rotation = Quaternion.Euler(elevationAngle, rotationAnglePer * i, 0);
                 var vector = rotation * Vector3.forward;
-                var limb = Instantiate(armPrefab, transform);
-                limb.transform.name = $"Arm {i}";
-                limb.transform.Translate(vector * limbOffsetRadius);
-                limb.transform.rotation = rotation;
-                arms.Add(limb);
+                var armController = Instantiate(armPrefab, transform);
+                armController.maw = maw.gameObject;
+                armController.transform.name = $"Arm {i}";
+                armController.transform.Translate(vector * limbOffsetRadius);
+                armController.transform.rotation = rotation;
+                arms.Add(armController);
             }
         }
 

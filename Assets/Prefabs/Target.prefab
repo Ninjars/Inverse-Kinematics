@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1112958428956384317}
   - component: {fileID: 1406428485147789901}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Target Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,6 +103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9047191875895155823}
   - component: {fileID: 58733308748724975}
+  - component: {fileID: -6718142952666059865}
   m_Layer: 0
   m_Name: Target
   m_TagString: Target
@@ -141,3 +142,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &-6718142952666059865
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5894372373416049715}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
