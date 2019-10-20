@@ -336,6 +336,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843af9a0df85e1841a957b18d5eb9e10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectPrefab: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3,
+    type: 3}
   collider: {fileID: 6118193391240772610}
 --- !u!1 &4562772914671247679
 GameObject:
