@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Body))]
 public class Octopus : MonoBehaviour {
@@ -12,17 +13,20 @@ public class Octopus : MonoBehaviour {
 
     private void Update() {
         var targets = GameObject.FindGameObjectsWithTag("Target");
-        body.updateArmTargets(targets);
+        var capturedTargets = body.updateArmTargets(targets);
         
         if (directControl) return;
 
-        var closest = closestTarget(transform.position, targets);
+        var uncapturedTargets = new List<GameObject>(targets);
+        uncapturedTargets.RemoveAll(arg => capturedTargets.Contains(arg));
+
+        var closest = closestTarget(transform.position, uncapturedTargets);
         if (closest != null) {
             body.setMoveTarget(closest.transform.position);
         }
     }
 
-    private GameObject closestTarget(Vector3 position, GameObject[] targets) {
+    private GameObject closestTarget(Vector3 position, List<GameObject> targets) {
         GameObject closest = null;
         float distance = Mathf.Infinity;
         foreach (GameObject target in targets) {

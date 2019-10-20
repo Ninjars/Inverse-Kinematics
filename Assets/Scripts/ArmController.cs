@@ -62,6 +62,14 @@ public class ArmController : MonoBehaviour, OnTargetTouchedHandler {
         }
     }
 
+    public GameObject getCapturedTarget() {
+        if (hasCapturedTarget) {
+            return target;
+        } else {
+            return null;
+        }
+    }
+
     public GameObject updateTargets(List<GameObject> targets) {
         if (!hasCapturedTarget) {
             if (!isTargetInRange()) {

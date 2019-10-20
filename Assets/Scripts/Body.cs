@@ -84,15 +84,21 @@ public class Body : MonoBehaviour {
         }
     }
 
-    internal void updateArmTargets(GameObject[] targets) {
+    internal List<GameObject> updateArmTargets(GameObject[] targets) {
         var validTargets = new List<GameObject>(targets);
+        var capturedTargets = new List<GameObject>();
         foreach (var arm in arms) {
             validTargets.Remove(arm.getCurrentTarget());
+            var captured = arm.getCapturedTarget();
+            if (captured != null) {
+                capturedTargets.Add(captured);
+            }
         }
         foreach (var arm in arms) {
             var armTarget = arm.updateTargets(validTargets);
             validTargets.Remove(armTarget);
         }
+        return capturedTargets;
     }
 
     internal void setMoveTarget(Vector3 point) {
