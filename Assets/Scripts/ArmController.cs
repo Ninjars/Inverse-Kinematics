@@ -23,7 +23,7 @@ public class ArmController : MonoBehaviour, OnTargetTouchedHandler {
     }
 
     private void FixedUpdate() {
-        if (target == null || isTargetOutOfRange(target.transform.position)) {
+        if (!isTargetInRange()) {
             limb.setTarget(getRestingPosition());
 
         } else if (hasCapturedTarget) {
@@ -41,21 +41,42 @@ public class ArmController : MonoBehaviour, OnTargetTouchedHandler {
         }
     }
 
-    private bool isTargetOutOfRange(Vector3 targetPosition) {
-        return Vector3.SqrMagnitude(targetPosition - transform.position) > (limb.length * limb.length);
+    private bool isTargetInRange() {
+        if (target == null) return false;
+        return isPositionInRange(target.transform.position);
+    }
+
+    private bool isPositionInRange(Vector3 targetPosition) {
+        return Vector3.SqrMagnitude(targetPosition - transform.position) <= (limb.length * limb.length);
     }
 
     private Vector3 getRestingPosition() {
         return transform.position + transform.rotation * restingOffset;
     }
 
-    public void updateTargets(GameObject[] targets) {
-        if (!hasCapturedTarget) {
-            target = closestTarget(limb.getEndPosition(), targets);
+    public GameObject getCurrentTarget() {
+        if (hasCapturedTarget || isTargetInRange()) {
+            return target;
+        } else {
+            return null;
         }
     }
 
-    private GameObject closestTarget(Vector3 position, GameObject[] targets) {
+    public GameObject updateTargets(List<GameObject> targets) {
+        if (!hasCapturedTarget) {
+            if (!isTargetInRange()) {
+                var targ = closestTarget(limb.getEndPosition(), targets);
+                if (isPositionInRange(targ.transform.position)) {
+                    target = targ;
+                } else {
+                    target = null;
+                }
+            }
+        }
+        return target;
+    }
+
+    private GameObject closestTarget(Vector3 position, List<GameObject> targets) {
         GameObject closest = null;
         float distance = Mathf.Infinity;
         foreach (GameObject target in targets) {
