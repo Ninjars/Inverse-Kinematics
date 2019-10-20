@@ -8,9 +8,11 @@ public class Limb : MonoBehaviour {
     public Vector3 limbTarget { private set; get; }
     private FABRIKChain limbChain;
     private LimbEnd end;
+    public float length { private set; get; }
 
     private void Awake() {
         limbChain = buildLimb(transform);
+        length = config.sectionCount * config.limbSectionPrefab.childOffset.z;
     }
 
     // this can be expanded to build branching limbs and so return a list of chains.
