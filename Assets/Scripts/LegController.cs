@@ -27,7 +27,13 @@ public class LegController : MonoBehaviour {
     void FixedUpdate() {
         var elapsed = Time.time - startTime;
         var rawFraction = elapsed / movementDurationSeconds;
-        if (elapsed > movementDurationSeconds) return;
+        if (elapsed > movementDurationSeconds) {
+            if (isTargetOutOfRange(limb.getEndPosition())) {
+                // Stretching beyond limb length; reset even though it's not this limb's time to be moving
+                limb.setTarget(findTargetPosition(Vector3.zero));
+            }
+            return;
+        }
 
         var horizontalFraction = Mathf.SmoothStep(0.0f, 1.0f, rawFraction);
         var verticalFraction = Mathf.SmoothStep(0.0f, 1.0f, 1 - Mathf.Abs(rawFraction - 0.5f) * 2);
