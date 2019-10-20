@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8167c81f9cc84a35ab0cb545b3f8a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armPrefab: {fileID: 5099248688644905334, guid: a9ab7f45ea26541efbda23e2fd4cb151,
+  armPrefab: {fileID: -5008431347376704931, guid: a9ab7f45ea26541efbda23e2fd4cb151,
     type: 3}
   armCount: 5
   legPrefab: {fileID: -5193728134972544665, guid: 087f0175018c0439687765d217857cd4,

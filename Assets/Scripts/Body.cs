@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Body : MonoBehaviour {
-    public Limb armPrefab;
+    public ArmController armPrefab;
     public int armCount;
     public LegController legPrefab;
     public int legCount;
@@ -19,7 +19,7 @@ public class Body : MonoBehaviour {
     private float breathingCurveOffset;
 
     private Rigidbody rb;
-    private List<Limb> arms;
+    private List<ArmController> arms;
     private List<LegController> legs;
     private float stepPeriod;
     private int activeLeg;
@@ -32,7 +32,7 @@ public class Body : MonoBehaviour {
 
         breathingCurveOffset = UnityEngine.Random.value;
 
-        arms = new List<Limb>(armCount);
+        arms = new List<ArmController>(armCount);
         if (armCount > 0) {
             var rotationAnglePer = 360 / armCount;
             for (int i = 0; i < armCount; i++) {
@@ -81,34 +81,12 @@ public class Body : MonoBehaviour {
     }
 
     internal void updateArmTargets(GameObject[] targets) {
-        // TODO: handle positioning arms when there's no targets
-        foreach (var limb in arms) {
-            updateTarget(limb, targets);
+        foreach (var arm in arms) {
+            arm.updateTargets(targets);
         }
     }
 
     internal void setMoveTarget(Vector3 point) {
         moveTarget = new Vector3(point.x, optimumHeightFromGround, point.z);
-    }
-
-    private void updateTarget(Limb limb, GameObject[] targets) {
-        var targetObject = closestTarget(limb.getEndPosition(), targets);
-        if (targetObject != null) {
-            limb.setTarget(targetObject.transform.position);
-        }
-    }
-
-    private GameObject closestTarget(Vector3 position, GameObject[] targets) {
-        GameObject closest = null;
-        float distance = Mathf.Infinity;
-        foreach (GameObject target in targets) {
-            Vector3 diff = target.transform.position - position;
-            float curDistance = diff.sqrMagnitude;
-            if (curDistance < distance) {
-                closest = target;
-                distance = curDistance;
-            }
-        }
-        return closest;
     }
 }

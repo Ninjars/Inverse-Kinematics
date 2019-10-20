@@ -34,7 +34,7 @@ public class LegController : MonoBehaviour {
         var position = Vector3.Lerp(initialPosition, targetPosition, horizontalFraction);
         position += Vector3.Lerp(Vector3.zero, Vector3.up * stepHeight, verticalFraction);
 
-        if (Vector3.SqrMagnitude(position - transform.position) > (limb.length * limb.length)) {
+        if (isTargetOutOfRange(position)) {
             // Stretching beyond limb length; reset
             position = findTargetPosition(Vector3.zero);
         }
@@ -48,6 +48,10 @@ public class LegController : MonoBehaviour {
         if (Vector3.SqrMagnitude(targetPosition - initialPosition) > 0.1) {
             startTime = Time.time;
         }
+    }
+
+    private bool isTargetOutOfRange(Vector3 targetPosition) {
+        return Vector3.SqrMagnitude(targetPosition - transform.position) > (limb.length * limb.length);
     }
 
     private Vector3 findTargetPosition(Vector3 movementVector) {
